@@ -1,6 +1,7 @@
 package de.god.workorder.mvc_controller;
 
 import org.apache.logging.log4j.Level;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,7 +44,7 @@ public class ValidationHistoryMvcController {
         try {
             WorkOrder workOrder = objectMapper.readValue(workOrderModel.getJson(), WorkOrder.class);
             RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:8080//api/work-order/validation", workOrder, String.class);
+            ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:8080/api/work-order/validation", workOrder, String.class);
             workOrderModel.setResult(response.getBody());
         } catch (RestClientException e) {
             workOrderModel.setResult(" " + e.getMessage().substring(e.getMessage().indexOf("[") + 1, e.getMessage().indexOf("]")).replaceAll(",","\n"));
